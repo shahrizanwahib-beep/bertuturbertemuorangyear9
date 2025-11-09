@@ -1,0 +1,1160 @@
+<!doctype html>
+<html lang="ms">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Slaid Dwibahasa - Kemahiran Bertutur 🎓</title>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+        body {
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+            background: #ffffff;
+            min-height: 100%;
+            overflow-x: hidden;
+        }
+
+        .slide-container {
+            min-height: 100%;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .slide {
+            display: none;
+            flex: 1;
+            padding: 3rem;
+            animation: slideIn 0.6s ease-out;
+        }
+
+        .slide.active {
+            display: flex;
+            flex-direction: column;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .slide-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            width: 100%;
+            max-width: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .slide-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .slide-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        .slide-subtitle {
+            font-size: 1.3rem;
+            color: #636e72;
+            font-weight: 500;
+        }
+
+        .slide-body {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .objectives-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .objectives-list li {
+            background: linear-gradient(135deg, #74b9ff 0%, #0984e3 100%);
+            color: white;
+            padding: 1rem 1.5rem;
+            margin: 0.8rem 0;
+            border-radius: 16px;
+            font-weight: 500;
+            box-shadow: 0 8px 25px rgba(116, 185, 255, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .objectives-list li:hover {
+            transform: translateX(8px);
+            box-shadow: 0 12px 35px rgba(116, 185, 255, 0.4);
+        }
+
+        .vocab-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .vocab-card {
+            color: #2d3436;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .vocab-card:hover {
+            transform: scale(1.05);
+        }
+
+        .vocab-word {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            color: #2d3436;
+        }
+
+        .vocab-meaning {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #636e72;
+        }
+
+        .phrase-list {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 1.5rem 0;
+        }
+
+        .phrase-item {
+            background: white;
+            padding: 1rem 1.5rem;
+            margin: 1rem 0;
+            border-radius: 12px;
+            border-left: 5px solid #4ecdc4;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            font-weight: 500;
+            color: #2d3436;
+        }
+
+        .activity-box {
+            background: linear-gradient(135deg, #00b894 0%, #00a085 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 20px;
+            margin: 1.5rem 0;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 184, 148, 0.3);
+        }
+
+        .activity-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .activity-description {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .timer-container {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            text-align: center;
+        }
+
+        .timer-display {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            font-family: 'Courier New', monospace;
+        }
+
+        .timer-controls {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-timer {
+            background: rgba(255, 255, 255, 0.9);
+            color: #2d3436;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-timer:hover {
+            background: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .rubric-table {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            margin: 1.5rem 0;
+        }
+
+        .rubric-header {
+            background: linear-gradient(135deg, #6c5ce7 0%, #a29bfe 100%);
+            color: white;
+            padding: 1rem;
+            font-weight: 700;
+            text-align: center;
+        }
+
+        .rubric-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .rubric-cell {
+            padding: 1rem;
+            text-align: center;
+            font-weight: 500;
+        }
+
+        .rubric-cell:first-child {
+            background: #f8f9fa;
+            font-weight: 600;
+            color: #2d3436;
+        }
+
+        .rubric-excellent { background: linear-gradient(135deg, #00b894 0%, #00a085 100%); color: white; }
+        .rubric-good { background: linear-gradient(135deg, #fdcb6e 0%, #e17055 100%); color: white; }
+        .rubric-needs { background: linear-gradient(135deg, #fd79a8 0%, #e84393 100%); color: white; }
+
+        .reflection-questions {
+            background: linear-gradient(135deg, #e8f4fd 0%, #f1f8ff 100%);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 1.5rem 0;
+        }
+
+        .question-item {
+            background: white;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            border-radius: 12px;
+            border-left: 5px solid #74b9ff;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: #2d3436;
+        }
+
+        .values-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .value-card {
+            text-align: center;
+            padding: 2rem;
+            border-radius: 20px;
+            color: white;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .value-card:hover {
+            transform: translateY(-8px);
+        }
+
+        .value-respect { background: linear-gradient(135deg, #fd79a8 0%, #fdcb6e 100%); }
+        .value-tolerance { background: linear-gradient(135deg, #74b9ff 0%, #0984e3 100%); }
+        .value-curiosity { background: linear-gradient(135deg, #00b894 0%, #00a085 100%); }
+
+        .value-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .value-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .value-description {
+            font-size: 1rem;
+            opacity: 0.9;
+            line-height: 1.5;
+        }
+
+        .navigation {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 50px;
+            padding: 1rem 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            z-index: 1000;
+        }
+
+        .nav-btn {
+            background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(78, 205, 196, 0.3);
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(78, 205, 196, 0.4);
+        }
+
+        .nav-btn:disabled {
+            background: #bdc3c7;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .progress-bar {
+            flex: 1;
+            height: 8px;
+            background: #e9ecef;
+            border-radius: 4px;
+            overflow: hidden;
+            margin: 0 1rem;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%);
+            border-radius: 4px;
+            transition: width 0.5s ease;
+        }
+
+        .slide-counter {
+            font-weight: 600;
+            color: #2d3436;
+            font-size: 0.9rem;
+        }
+
+        .quote-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 20px;
+            text-align: center;
+            margin: 2rem 0;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+        }
+
+        .quote-text {
+            font-size: 1.8rem;
+            font-weight: 600;
+            font-style: italic;
+            margin-bottom: 1rem;
+            line-height: 1.4;
+        }
+
+        .quote-author {
+            font-size: 1rem;
+            opacity: 0.8;
+        }
+
+        .warmup-activity {
+            background: linear-gradient(135deg, #feca57 0%, #ff9ff3 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 20px;
+            margin: 1.5rem 0;
+            box-shadow: 0 10px 30px rgba(254, 202, 87, 0.3);
+        }
+
+        .warmup-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .warmup-instructions {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .warmup-questions {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+
+        .warmup-question {
+            margin: 0.8rem 0;
+            font-weight: 500;
+            padding-left: 1rem;
+            position: relative;
+        }
+
+        .warmup-question::before {
+            content: "💬";
+            position: absolute;
+            left: -0.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .slide {
+                padding: 2rem 1rem;
+            }
+            
+            .slide-title {
+                font-size: 2rem;
+            }
+            
+            .vocab-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .values-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .rubric-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .rubric-cell {
+                border-bottom: 1px solid #dee2e6;
+            }
+            
+            .navigation {
+                bottom: 1rem;
+                left: 1rem;
+                right: 1rem;
+                transform: none;
+                padding: 0.8rem 1rem;
+            }
+            
+            .timer-display {
+                font-size: 2rem;
+            }
+        }
+    </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="min-h-full">
+  <div class="slide-container"><!-- Slide 1: Tajuk & Objektif -->
+   <div class="slide active">
+    <div class="slide-content">
+     <div class="slide-header">
+      <h1 id="tajuk-utama" class="slide-title">🌍 Bertemu Orang daripada Pelbagai Latar Belakang</h1>
+      <p id="subtajuk" class="slide-subtitle">Kelas 4: Kemahiran Bertutur / Speaking Skills</p>
+     </div>
+     <div class="slide-body">
+      <h2 class="text-2xl font-bold text-center mb-6 text-gray-700">🎯 Objektif Pembelajaran / Learning Objectives</h2>
+      <ul class="objectives-list">
+       <li>🗣️ Berkongsi pengalaman bertemu orang dari negeri/budaya lain</li>
+       <li>🤝 Menggunakan frasa yang sesuai untuk menceritakan pengalaman</li>
+       <li>🌟 Menghargai kepelbagaian budaya di Malaysia</li>
+       <li>💬 Meningkatkan keyakinan bertutur dalam Bahasa Malaysia</li>
+       <li>🎭 Develop speaking confidence and cultural awareness</li>
+      </ul>
+     </div>
+    </div>
+   </div><!-- Slide 2: Warm-up Activity -->
+   <div class="slide">
+    <div class="slide-content">
+     <div class="slide-header">
+      <h1 class="slide-title">🔥 Aktiviti Pemanasan</h1>
+      <p class="slide-subtitle">Warm-up Activity</p>
+     </div>
+     <div class="slide-body">
+      <div class="warmup-activity">
+       <h2 class="warmup-title">🙋‍♀️ "Siapa Pernah Jumpa?"</h2>
+       <div class="warmup-instructions"><strong>Arahan / Instructions:</strong><br>
+         Bergerak dalam kelas dan tanya rakan-rakan anda soalan-soalan ini. Cari seseorang yang boleh jawab "YA" untuk setiap soalan!
+       </div>
+       <div class="warmup-questions">
+        <div class="warmup-question">
+         Siapa pernah jumpa orang dari Sabah atau Sarawak?
+        </div>
+        <div class="warmup-question">
+         Siapa ada kawan dari negeri lain?
+        </div>
+        <div class="warmup-question">
+         Siapa pernah makan makanan dari budaya lain?
+        </div>
+        <div class="warmup-question">
+         Siapa boleh cakap dalam bahasa lain?
+        </div>
+        <div class="warmup-question">
+         Siapa pernah pergi kenduri kaum lain?
+        </div>
+        <div class="warmup-question">
+         Who has friends from different states?
+        </div>
+       </div>
+       <div class="timer-container">
+        <div class="timer-display" id="warmup-timer">
+         05:00
+        </div>
+        <div class="timer-controls"><button class="btn-timer" onclick="startTimer(300, 'warmup-timer')">▶️ Mula</button> <button class="btn-timer" onclick="pauseTimer()">⏸️ Berhenti</button> <button class="btn-timer" onclick="resetTimer(300, 'warmup-timer')">🔄 Reset</button>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </div><!-- Slide 3: Kosa Kata -->
+   <div class="slide">
+    <div class="slide-content">
+     <div class="slide-header">
+      <h1 class="slide-title">📚 Kosa Kata Penting</h1>
+      <p class="slide-subtitle">Important Vocabulary</p>
+     </div>
+     <div class="slide-body">
+      <div class="vocab-grid">
+       <div class="vocab-card">
+        <div class="vocab-word">
+         🤝 Berkawan
+        </div>
+        <div class="vocab-meaning">
+         To make friends / Befriend
+        </div>
+       </div>
+       <div class="vocab-card">
+        <div class="vocab-word">
+         💬 Berbual
+        </div>
+        <div class="vocab-meaning">
+         To chat / Converse
+        </div>
+       </div>
+       <div class="vocab-card">
+        <div class="vocab-word">
+         🎭 Budaya
+        </div>
+        <div class="vocab-meaning">
+         Culture / Cultural practices
+        </div>
+       </div>
+       <div class="vocab-card">
+        <div class="vocab-word">
+         🙏 Menghormati
+        </div>
+        <div class="vocab-meaning">
+         To respect / Show respect
+        </div>
+       </div>
+       <div class="vocab-card">
+        <div class="vocab-word">
+         📖 Belajar
+        </div>
+        <div class="vocab-meaning">
+         To learn / Acquire knowledge
+        </div>
+       </div>
+       <div class="vocab-card">
+        <div class="vocab-word">
+         🌈 Kepelbagaian
+        </div>
+        <div class="vocab-meaning">
+         Diversity / Variety
+        </div>
+       </div>
+      </div>
+      <div class="mt-6 text-center">
+       <p class="text-lg font-semibold text-gray-700">💡 <strong>Tip:</strong> Gunakan perkataan ini dalam perbualan anda!<br><em>Use these words in your conversations!</em></p>
+      </div>
+     </div>
+    </div>
+   </div><!-- Slide 4: Frasa Bantuan -->
+   <div class="slide">
+    <div class="slide-content">
+     <div class="slide-header">
+      <h1 class="slide-title">💬 Frasa Bantuan</h1>
+      <p class="slide-subtitle">Helpful Phrases</p>
+     </div>
+     <div class="slide-body">
+      <div class="phrase-list">
+       <h3 class="text-xl font-bold text-center mb-4 text-gray-700">🗣️ Untuk Berkongsi Pengalaman / Sharing Experiences</h3>
+       <div class="phrase-item"><strong>🌟 "Saya pernah bertemu..."</strong><br><em>"I have met..." / "I once met..."</em>
+       </div>
+       <div class="phrase-item"><strong>🏠 "Dia berasal dari..."</strong><br><em>"He/She comes from..." / "He/She is from..."</em>
+       </div>
+       <div class="phrase-item"><strong>💡 "Saya belajar bahawa..."</strong><br><em>"I learned that..." / "I discovered that..."</em>
+       </div>
+       <div class="phrase-item"><strong>🤔 "Yang menarik ialah..."</strong><br><em>"What's interesting is..." / "The interesting thing is..."</em>
+       </div>
+       <div class="phrase-item"><strong>🎉 "Pengalaman saya dengan..."</strong><br><em>"My experience with..." / "When I experienced..."</em>
+       </div>
+       <div class="phrase-item"><strong>🌈 "Perbezaan yang saya perhatikan..."</strong><br><em>"The differences I noticed..." / "What I observed was..."</em>
+       </div>
+      </div>
+     </div>
+    </div>
+   </div><!-- Slide 5: Aktiviti Bertutur 1 -->
+   <div class="slide">
+    <div class="slide-content">
+     <div class="slide-header">
+      <h1 class="slide-title">🎤 Aktiviti Bertutur 1</h1>
+      <p class="slide-subtitle">Speaking Activity 1</p>
+     </div>
+     <div class="slide-body">
+      <div class="activity-box">
+       <h2 class="activity-title">👥 Berkongsi Berpasangan</h2>
+       <div class="activity-description"><strong>Arahan / Instructions:</strong><br>
+         • Cari pasangan anda / Find your partner<br>
+         • Setiap orang dapat 2 minit untuk berkongsi / Each person gets 2 minutes to share<br>
+         • Gunakan frasa bantuan yang dipelajari / Use the helpful phrases learned<br>
+         • Dengar dengan penuh perhatian / Listen attentively
+       </div>
+       <div class="bg-white bg-opacity-20 rounded-lg p-4 mb-4">
+        <h3 class="font-bold text-lg mb-2">🗣️ Topik untuk Dikongsi / Topics to Share:</h3>
+        <ul class="text-left list-none space-y-2">
+         <li>🏠 Ceritakan tentang rakan dari negeri lain</li>
+         <li>🍜 Pengalaman makan makanan budaya lain</li>
+         <li>🎊 Perayaan atau majlis yang pernah dihadiri</li>
+         <li>🗣️ Bahasa atau dialek yang pernah dipelajari</li>
+         <li>🎭 Budaya menarik yang pernah dilihat</li>
+        </ul>
+       </div>
+       <div class="timer-container">
+        <div class="timer-display" id="speaking-timer">
+         02:00
+        </div>
+        <div class="timer-controls"><button class="btn-timer" onclick="startTimer(120, 'speaking-timer')">▶️ Mula Orang Pertama</button> <button class="btn-timer" onclick="startTimer(120, 'speaking-timer')">🔄 Orang Kedua</button> <button class="btn-timer" onclick="pauseTimer()">⏸️ Berhenti</button>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </div><!-- Slide 6: Aktiviti Bertutur 2 -->
+   <div class="slide">
+    <div class="slide-content">
+     <div class="slide-header">
+      <h1 class="slide-title">🎯 Aktiviti Bertutur 2</h1>
+      <p class="slide-subtitle">Speaking Activity 2</p>
+     </div>
+     <div class="slide-body">
+      <div class="activity-box">
+       <h2 class="activity-title">👂 Maklum Balas &amp; Perkongsian</h2>
+       <div class="activity-description"><strong>Arahan / Instructions:</strong><br>
+         • Pasangan bergabung dengan pasangan lain (kumpulan 4 orang)<br>
+         • Setiap orang kongsi cerita pasangan mereka (1 minit)<br>
+         • Kumpulan beri maklum balas positif<br>
+         • Pairs join with another pair (groups of 4)<br>
+         • Each person shares their partner's story (1 minute)<br>
+         • Group gives positive feedback
+       </div>
+       <div class="bg-white bg-opacity-20 rounded-lg p-4 mb-4">
+        <h3 class="font-bold text-lg mb-2">💬 Frasa Maklum Balas / Feedback Phrases:</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-left">
+         <div>
+          <p><strong>🌟 "Menarik sekali!"</strong></p>
+          <p><strong>👏 "Bagus!"</strong></p>
+          <p><strong>💡 "Saya tidak tahu itu!"</strong></p>
+         </div>
+         <div>
+          <p><strong>🤔 "Boleh cerita lagi?"</strong></p>
+          <p><strong>🎉 "Pengalaman yang hebat!"</strong></p>
+          <p><strong>❓ "Apa yang anda rasa?"</strong></p>
+         </div>
+        </div>
+       </div>
+       <div class="timer-container">
+        <div class="timer-display" id="feedback-timer">
+         01:00
+        </div>
+        <div class="timer-controls"><button class="btn-timer" onclick="startTimer(60, 'feedback-timer')">▶️ Mula 1 Minit</button> <button class="btn-timer" onclick="startTimer(180, 'feedback-timer')">⏰ 3 Minit Penuh</button> <button class="btn-timer" onclick="pauseTimer()">⏸️ Berhenti</button>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </div><!-- Slide 7: Rubrik Penilaian -->
+   <div class="slide">
+    <div class="slide-content">
+     <div class="slide-header">
+      <h1 class="slide-title">📊 Rubrik Penilaian</h1>
+      <p class="slide-subtitle">Assessment Rubric</p>
+     </div>
+     <div class="slide-body">
+      <div class="rubric-table">
+       <div class="rubric-header">
+        Penilaian Kemahiran Bertutur / Speaking Skills Assessment
+       </div>
+       <div class="rubric-row">
+        <div class="rubric-cell">
+         <strong>Kriteria</strong>
+        </div>
+        <div class="rubric-cell rubric-excellent">
+         <strong>Cemerlang (3)</strong>
+        </div>
+        <div class="rubric-cell rubric-good">
+         <strong>Baik (2)</strong>
+        </div>
+        <div class="rubric-cell rubric-needs">
+         <strong>Perlu Diperbaiki (1)</strong>
+        </div>
+       </div>
+       <div class="rubric-row">
+        <div class="rubric-cell">
+         <strong>🗣️ Kefasihan<br>
+          Fluency</strong>
+        </div>
+        <div class="rubric-cell rubric-excellent">
+         Bertutur dengan lancar, sedikit jeda
+        </div>
+        <div class="rubric-cell rubric-good">
+         Bertutur dengan baik, beberapa jeda
+        </div>
+        <div class="rubric-cell rubric-needs">
+         Banyak jeda, perlu bantuan
+        </div>
+       </div>
+       <div class="rubric-row">
+        <div class="rubric-cell">
+         <strong>📝 Tatabahasa<br>
+          Grammar</strong>
+        </div>
+        <div class="rubric-cell rubric-excellent">
+         Menggunakan ayat lengkap dan betul
+        </div>
+        <div class="rubric-cell rubric-good">
+         Kebanyakan ayat betul
+        </div>
+        <div class="rubric-cell rubric-needs">
+         Banyak kesilapan tatabahasa
+        </div>
+       </div>
+       <div class="rubric-row">
+        <div class="rubric-cell">
+         <strong>💪 Keyakinan<br>
+          Confidence</strong>
+        </div>
+        <div class="rubric-cell rubric-excellent">
+         Sangat yakin, suara jelas
+        </div>
+        <div class="rubric-cell rubric-good">
+         Cukup yakin, kadang-kadang ragu
+        </div>
+        <div class="rubric-cell rubric-needs">
+         Kurang yakin, suara perlahan
+        </div>
+       </div>
+       <div class="rubric-row">
+        <div class="rubric-cell">
+         <strong>💬 Penggunaan Frasa<br>
+          Phrase Usage</strong>
+        </div>
+        <div class="rubric-cell rubric-excellent">
+         Menggunakan frasa dengan tepat
+        </div>
+        <div class="rubric-cell rubric-good">
+         Menggunakan beberapa frasa
+        </div>
+        <div class="rubric-cell rubric-needs">
+         Jarang menggunakan frasa
+        </div>
+       </div>
+      </div>
+      <div class="mt-6 text-center">
+       <p class="text-lg font-semibold text-gray-700">🎯 <strong>Jumlah Markah:</strong> _____ / 12<br><em>Total Score: _____ / 12</em></p>
+      </div>
+     </div>
+    </div>
+   </div><!-- Slide 8: Soalan Refleksi -->
+   <div class="slide">
+    <div class="slide-content">
+     <div class="slide-header">
+      <h1 class="slide-title">🤔 Refleksi</h1>
+      <p class="slide-subtitle">Reflection Questions</p>
+     </div>
+     <div class="slide-body">
+      <div class="reflection-questions">
+       <h2 class="text-2xl font-bold text-center mb-6 text-gray-700">💭 Soalan Panduan Refleksi</h2>
+       <div class="question-item"><strong>🌍 Apa yang kamu pelajari tentang kepelbagaian budaya hari ini?</strong><br><em>What did you learn about cultural diversity today?</em>
+       </div>
+       <div class="question-item"><strong>🤝 Bagaimana perasaan kamu apabila mendengar cerita rakan-rakan?</strong><br><em>How did you feel when listening to your friends' stories?</em>
+       </div>
+       <div class="question-item"><strong>🌟 Apakah perkara baru yang paling menarik yang kamu dengar?</strong><br><em>What was the most interesting new thing you heard?</em>
+       </div>
+       <div class="question-item"><strong>💡 Mengapa penting untuk menghormati budaya orang lain?</strong><br><em>Why is it important to respect other people's cultures?</em>
+       </div>
+       <div class="question-item"><strong>🎯 Bagaimana kamu boleh menjadi kawan yang lebih baik kepada orang dari budaya lain?</strong><br><em>How can you be a better friend to people from different cultures?</em>
+       </div>
+       <div class="question-item"><strong>📚 Apa yang kamu ingin pelajari lagi tentang budaya Malaysia?</strong><br><em>What else would you like to learn about Malaysian cultures?</em>
+       </div>
+      </div>
+     </div>
+    </div>
+   </div><!-- Slide 9: Ringkasan Nilai -->
+   <div class="slide">
+    <div class="slide-content">
+     <div class="slide-header">
+      <h1 class="slide-title">⭐ Nilai-Nilai Penting</h1>
+      <p class="slide-subtitle">Important Values</p>
+     </div>
+     <div class="slide-body">
+      <div class="values-container">
+       <div class="value-card value-respect">
+        <div class="value-icon">
+         🙏
+        </div>
+        <div class="value-title">
+         RESPECT
+        </div>
+        <div class="value-title">
+         Menghormati
+        </div>
+        <div class="value-description">
+         Menghargai perbezaan budaya, agama, dan tradisi orang lain. Appreciating differences in culture, religion, and traditions.
+        </div>
+       </div>
+       <div class="value-card value-tolerance">
+        <div class="value-icon">
+         🤝
+        </div>
+        <div class="value-title">
+         TOLERANCE
+        </div>
+        <div class="value-title">
+         Toleransi
+        </div>
+        <div class="value-description">
+         Menerima dan memahami cara hidup yang berbeza dengan kita. Accepting and understanding different ways of life.
+        </div>
+       </div>
+       <div class="value-card value-curiosity">
+        <div class="value-icon">
+         🔍
+        </div>
+        <div class="value-title">
+         CURIOSITY
+        </div>
+        <div class="value-title">
+         Ingin Tahu
+        </div>
+        <div class="value-description">
+         Bersemangat untuk belajar tentang budaya dan orang baru. Being eager to learn about new cultures and people.
+        </div>
+       </div>
+      </div>
+      <div class="mt-8 text-center">
+       <div class="bg-gradient-to-r from-purple-500 to-pink-500 text-white p-6 rounded-2xl">
+        <h3 class="text-2xl font-bold mb-4">🌈 Malaysia Truly Asia</h3>
+        <p class="text-lg">Kepelbagaian adalah kekuatan kita!<br><em>Diversity is our strength!</em></p>
+       </div>
+      </div>
+     </div>
+    </div>
+   </div><!-- Slide 10: Penutup -->
+   <div class="slide">
+    <div class="slide-content">
+     <div class="slide-header">
+      <h1 class="slide-title">🎉 Tahniah!</h1>
+      <p class="slide-subtitle">Congratulations!</p>
+     </div>
+     <div class="slide-body">
+      <div class="text-center mb-8">
+       <div class="text-6xl mb-4">
+        🌟
+       </div>
+       <h2 class="text-3xl font-bold text-gray-700 mb-4">Anda telah berjaya menyelesaikan aktiviti hari ini!</h2>
+       <p class="text-xl text-gray-600">You have successfully completed today's activities!</p>
+      </div>
+      <div class="quote-box">
+       <div class="quote-text">
+        "Every conversation builds understanding."
+       </div>
+       <div class="quote-author">
+        - Setiap perbualan membina pemahaman -
+       </div>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
+       <div class="bg-gradient-to-br from-green-400 to-blue-500 text-white p-6 rounded-2xl text-center">
+        <h3 class="text-xl font-bold mb-2">📚 Apa yang Dipelajari</h3>
+        <ul class="text-left space-y-1">
+         <li>✅ Berkongsi pengalaman budaya</li>
+         <li>✅ Menggunakan frasa yang sesuai</li>
+         <li>✅ Menghargai kepelbagaian</li>
+         <li>✅ Meningkatkan keyakinan bertutur</li>
+        </ul>
+       </div>
+       <div class="bg-gradient-to-br from-purple-400 to-pink-500 text-white p-6 rounded-2xl text-center">
+        <h3 class="text-xl font-bold mb-2">🎯 Aktiviti Seterusnya</h3>
+        <ul class="text-left space-y-1">
+         <li>🏠 Tanya keluarga tentang budaya mereka</li>
+         <li>📖 Baca buku tentang negeri Malaysia</li>
+         <li>🎭 Hadiri perayaan budaya lain</li>
+         <li>🤝 Berkawan dengan orang baru</li>
+        </ul>
+       </div>
+      </div>
+      <div class="text-center mt-8">
+       <p class="text-2xl font-bold text-gray-700">🌍 Teruskan menjelajahi dunia yang indah ini!<br><em>Keep exploring this beautiful world!</em></p>
+      </div>
+     </div>
+    </div>
+   </div>
+  </div><!-- Navigation -->
+  <div class="navigation"><button id="prev-btn" class="nav-btn" onclick="previousSlide()">⬅️ Sebelum</button>
+   <div class="progress-bar">
+    <div id="progress-fill" class="progress-fill" style="width: 10%"></div>
+   </div>
+   <div id="slide-counter" class="slide-counter">
+    1 / 10
+   </div><button class="nav-btn" onclick="toggleFullscreen()" title="Tekan F untuk fullscreen">🖥️ Fullscreen</button> <button id="next-btn" class="nav-btn" onclick="nextSlide()">Seterusnya ➡️</button>
+  </div>
+  <script>
+        // Configuration
+        const defaultConfig = {
+            tajuk_utama: "Bertemu Orang daripada Pelbagai Latar Belakang",
+            subtajuk: "Kelas 4: Kemahiran Bertutur / Speaking Skills"
+        };
+
+        // Global variables
+        let currentSlide = 0;
+        const totalSlides = 10;
+        let timerInterval = null;
+        let timerSeconds = 0;
+        let isTimerRunning = false;
+
+        // Slide navigation
+        function showSlide(n) {
+            const slides = document.querySelectorAll('.slide');
+            
+            // Hide all slides
+            slides.forEach(slide => slide.classList.remove('active'));
+            
+            // Show current slide
+            if (n >= 0 && n < totalSlides) {
+                slides[n].classList.add('active');
+                currentSlide = n;
+                updateNavigation();
+                updateProgress();
+            }
+        }
+
+        function nextSlide() {
+            if (currentSlide < totalSlides - 1) {
+                showSlide(currentSlide + 1);
+            }
+        }
+
+        function previousSlide() {
+            if (currentSlide > 0) {
+                showSlide(currentSlide - 1);
+            }
+        }
+
+        function updateNavigation() {
+            const prevBtn = document.getElementById('prev-btn');
+            const nextBtn = document.getElementById('next-btn');
+            const slideCounter = document.getElementById('slide-counter');
+            
+            prevBtn.disabled = currentSlide === 0;
+            nextBtn.disabled = currentSlide === totalSlides - 1;
+            slideCounter.textContent = `${currentSlide + 1} / ${totalSlides}`;
+        }
+
+        function updateProgress() {
+            const progressFill = document.getElementById('progress-fill');
+            const percentage = ((currentSlide + 1) / totalSlides) * 100;
+            progressFill.style.width = `${percentage}%`;
+        }
+
+        // Timer functionality
+        function startTimer(seconds, displayId) {
+            clearInterval(timerInterval);
+            timerSeconds = seconds;
+            isTimerRunning = true;
+            
+            const display = document.getElementById(displayId);
+            
+            timerInterval = setInterval(() => {
+                if (timerSeconds <= 0) {
+                    clearInterval(timerInterval);
+                    isTimerRunning = false;
+                    display.textContent = "00:00";
+                    
+                    // Flash the timer when done
+                    display.style.color = '#e74c3c';
+                    setTimeout(() => {
+                        display.style.color = '';
+                    }, 2000);
+                    
+                    return;
+                }
+                
+                const minutes = Math.floor(timerSeconds / 60);
+                const seconds = timerSeconds % 60;
+                display.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                timerSeconds--;
+            }, 1000);
+        }
+
+        function pauseTimer() {
+            if (isTimerRunning) {
+                clearInterval(timerInterval);
+                isTimerRunning = false;
+            }
+        }
+
+        function resetTimer(seconds, displayId) {
+            clearInterval(timerInterval);
+            isTimerRunning = false;
+            timerSeconds = seconds;
+            
+            const minutes = Math.floor(seconds / 60);
+            const remainingSeconds = seconds % 60;
+            document.getElementById(displayId).textContent = 
+                `${minutes.toString().padStart(2, '0')}:${remainingSeconds.toString().padStart(2, '0')}`;
+            document.getElementById(displayId).style.color = '';
+        }
+
+        // Fullscreen functionality
+        function toggleFullscreen() {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen().catch(err => {
+                    console.log(`Error attempting to enable fullscreen: ${err.message}`);
+                });
+            } else {
+                document.exitFullscreen().catch(err => {
+                    console.log(`Error attempting to exit fullscreen: ${err.message}`);
+                });
+            }
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            switch(e.key) {
+                case 'ArrowRight':
+                case ' ':
+                    e.preventDefault();
+                    nextSlide();
+                    break;
+                case 'ArrowLeft':
+                    e.preventDefault();
+                    previousSlide();
+                    break;
+                case 'Home':
+                    e.preventDefault();
+                    showSlide(0);
+                    break;
+                case 'End':
+                    e.preventDefault();
+                    showSlide(totalSlides - 1);
+                    break;
+                case 'f':
+                case 'F':
+                    e.preventDefault();
+                    toggleFullscreen();
+                    break;
+                case 'Escape':
+                    if (document.fullscreenElement) {
+                        e.preventDefault();
+                        document.exitFullscreen();
+                    }
+                    break;
+            }
+        });
+
+        // Element SDK Configuration
+        async function onConfigChange(config) {
+            try {
+                const tajukElement = document.getElementById('tajuk-utama');
+                if (tajukElement && config.tajuk_utama) {
+                    tajukElement.textContent = `🌍 ${config.tajuk_utama}`;
+                }
+                
+                const subtajukElement = document.getElementById('subtajuk');
+                if (subtajukElement && config.subtajuk) {
+                    subtajukElement.textContent = config.subtajuk;
+                }
+                
+
+                
+                console.log('✅ Konfigurasi slaid berjaya digunakan');
+            } catch (error) {
+                console.error('❌ Ralat menggunakan konfigurasi:', error);
+            }
+        }
+
+        // Initialize application
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🚀 Sistem Slaid Dwibahasa dimulakan!');
+            
+            // Initialize first slide
+            showSlide(0);
+            
+            // Apply initial config
+            if (window.elementSdk && window.elementSdk.config) {
+                onConfigChange(window.elementSdk.config);
+            }
+            
+            console.log('✅ Semua sistem slaid siap digunakan!');
+            console.log('💡 Gunakan anak panah atau butang untuk navigasi');
+            console.log('⏱️ Timer tersedia untuk aktiviti bertutur');
+        });
+
+        // Initialize Element SDK
+        if (window.elementSdk) {
+            window.elementSdk.init({
+                defaultConfig: defaultConfig,
+                onConfigChange: onConfigChange,
+                mapToCapabilities: (config) => ({
+                    recolorables: [],
+                    borderables: [],
+                    fontEditable: undefined,
+                    fontSizeable: undefined
+                }),
+                mapToEditPanelValues: (config) => new Map([
+                    ["tajuk_utama", config.tajuk_utama || defaultConfig.tajuk_utama],
+                    ["subtajuk", config.subtajuk || defaultConfig.subtajuk]
+                ])
+            });
+        }
+    </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9998fb32e4de6b5d',t:'MTc2MjMxMDM3Mi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
